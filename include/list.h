@@ -5,6 +5,7 @@ template<typename T>
 class Mylist
 {
 private:
+//d
     class Node
     {
         public:
