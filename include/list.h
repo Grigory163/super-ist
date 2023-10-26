@@ -1,4 +1,5 @@
-#include <iostream>
+#include<iostream>
+
 using namespace std;
 namespace my{
 template<typename T>
@@ -30,19 +31,15 @@ public:
     void push_back(const T& item);
     friend ostream& operator<<(std::ostream& os, const Mylist& list) {
 
-        Node* current = list.head;
+    for(Node* current = list.head; current != nullptr; current = current->next) {
 
-        while(current != nullptr) {
-
-            os << current->data << " ";
-
-            current = current->next;
-
-        }
-
-        return os;
+        os << current->data << " ";
 
     }
+
+    return os;
+
+}
 };
 
 template<typename T>
@@ -78,9 +75,10 @@ template<typename T>
 void Mylist<T>::push_front(const T& item)
 {
     Node* new_node = new Node;
+    new_node->data = item;
+    new_node->next = head;
     if(head!=nullptr){
-        new_node->data = item;
-        new_node->next = head;
+
         head = new_node;
     }
     else
@@ -114,34 +112,33 @@ void Mylist<T>::push_back(const T& item)
 
 
 template<typename T>
+
 void Mylist<T>::pop_back()
 {
     if(head!=nullptr)
     {
-        Node* tmp = head;
-        while(tmp->next!=nullptr)
+        if(head->next == nullptr) {
+            delete head;
+            head = nullptr;
+        } else 
         {
-            tmp->next = tmp;
+            Node* tmp = head;
+            Node* prev = nullptr;
+            while(tmp->next!=nullptr)
+            {
+                prev = tmp;
+                tmp = tmp->next;
+            }
+            delete tmp;
+            prev->next = nullptr;
         }
-        delete tmp;
     }
-    else 
+    else
     {
-        throw out_of_range("Cannot pop front from an empty list");
+        throw out_of_range("Cannot pop back from an empty list");
     }
+
 }
 
 
-int main()
-{
-    Mylist<int> a;
-    a.push_back(5); 
-    a.push_back(5); 
-    a.push_back(5); 
-    a.push_back(5); 
-    a.push_back(5); 
-    a.push_back(5); 
-    cout << a;
-    return 0;
-}
 }

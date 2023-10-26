@@ -1,0 +1,3 @@
+/home/gripulia/super-ist/build/CMakeFiles/main.dir
+/home/gripulia/super-ist/build/CMakeFiles/edit_cache.dir
+/home/gripulia/super-ist/build/CMakeFiles/rebuild_cache.dir
