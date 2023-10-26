@@ -4,13 +4,15 @@ using namespace my;
 int main()
 {
     Mylist<int> a;
-    a.push_front(4);
-    a.push_front(4);
-    a.push_front(4);
+    a.push_front(1);
+    a.push_front(2);
+    a.push_front(3);
     a.push_front(4);
     a.push_back(10);
-    a.pop_front();
-    cout << a;
+    Mylist<int> b(a);
+    cout << b << endl;
+    // a.destroy(3);
+    // cout << a << endl;
     // Mylist<int> b;
     // b.push_back(5); 
     // b.push_back(5); 
