@@ -32,17 +32,17 @@ public:
     void insert(const T& item, int index);
     void destroy(int index);
     T& operator[](int index);
+    void  push_front(const Mylist<T> other);
+    void  push_back(const Mylist<T> other);
+    void delete_node(const T& item);
+    Mylist<T>& operator=(Mylist<T> other);
     friend ostream& operator<<(std::ostream& os, const Mylist& list) {
-
     for(Node* current = list.head; current != nullptr; current = current->next) {
-
         os << current->data << " ";
-
     }
-
     return os;
-
-}
+    }
+    void swap(Mylist<T>& other);
 };
 
 template<typename T>
@@ -54,6 +54,26 @@ Mylist<T>::Mylist(const Mylist<T>& other): head(nullptr)
         this->push_back(tmp->data);
         tmp = tmp->next;
     }
+}
+
+template<typename T>
+void Mylist<T>::swap(Mylist<T>& other)
+{
+    Node* tmp = head;
+    head = other.head;
+    other.head = tmp;
+}
+
+
+template<typename T>
+Mylist<T>& Mylist<T>::operator=(Mylist other)
+{
+    if(this == &other)
+    {
+        return *this;
+    }
+    swap(other);
+    return *this;
 }
 
 template<typename T>
@@ -232,6 +252,75 @@ void Mylist<T>::destroy(int index)
         Node* node_to_delete = tmp->next;
         tmp->next = node_to_delete->next;
         delete node_to_delete;
+    }
+}
+
+template<typename T>
+void Mylist<T>::push_front(const Mylist<T> other)
+{
+    Node* tmp = other.head;
+    Mylist<T> list;
+    
+    while(tmp!=nullptr)
+    {
+        list.push_front(tmp->data);
+        tmp = tmp->next;
+    }
+    Node* kk = list.head;
+    while(kk!=nullptr)
+    {
+        this->push_front(kk->data);
+        kk = kk->next;
+    }
+}
+
+template<typename T> 
+void Mylist<T>::push_back(const Mylist<T> other)
+{
+    Node* tmp = other.head;
+    while(tmp!=nullptr)
+    {
+        this->push_back(tmp->data);
+        tmp = tmp->next;
+    }
+}
+
+
+template<typename T>
+void Mylist<T>::delete_node(const T& item)
+{
+    Node* current = head;
+
+    Node* prev = nullptr;
+
+    while(current != nullptr) {
+
+        if(current->data == item) {
+
+            Node* to_delete = current;
+
+            current = current->next;
+
+            if(prev == nullptr) {
+
+                head = current;
+
+            } else {
+
+                prev->next = current;
+
+            }
+
+            delete to_delete;
+
+        } else {
+
+            prev = current;
+
+            current = current->next;
+
+        }
+
     }
 }
 }
