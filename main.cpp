@@ -3,32 +3,28 @@ using namespace std;
 using namespace my;
 int main()
 {
-    Mylist<int> a;
-    a.push_front(1);
-    a.push_front(2);
-    a.push_front(3);
-    a.push_front(4);
-    a.push_back(10);
-    a.push_front(4);
-    a.push_front(4);
-    a.push_front(4);
-    Mylist<int> b;
-    b.push_back(2);
-    b.push_back(2);
-    b.push_back(2);
-    b.push_back(2);
-    b.push_back(2);
-    a.delete_node(3);
-    cout << a;
-    // a.destroy(3);
-    // cout << a << endl;
-    // Mylist<int> b;
-    // b.push_back(5); 
-    // b.push_back(5); 
-    // b.push_back(5); 
-    // b.push_back(5); 
-    // b.push_back(5); 
-    // b.pop_back(); 
-    // cout << b;
+    Mylist<int> source;
+    Mylist<int> auxiliary;
+    Mylist<int> target;
+    source.push_front(1);
+    source.push_front(2);
+    source.push_front(3);
+    source.push_front(4);
+    source.push_front(5);
+    cout << source << endl;
+    // cout << auxiliary << endl;
+    // cout << target << endl;
+    try
+    {
+        hanoi(source.getsize() ,source, target, auxiliary);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    cout << source << endl;
+    cout << auxiliary << endl;
+    cout << target << endl;
+    
     return 0;
 }

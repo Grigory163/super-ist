@@ -17,8 +17,9 @@ private:
             this->next = nullptr;
         }
     };
-public:
     Node* head;
+    int _size = 0;
+public:
     Mylist()
     {
         this->head = nullptr;
@@ -43,6 +44,11 @@ public:
     return os;
     }
     void swap(Mylist<T>& other);
+    T& back();
+    int getsize()
+    {
+        return _size;
+    }
 };
 
 template<typename T>
@@ -59,6 +65,7 @@ Mylist<T>::Mylist(const Mylist<T>& other): head(nullptr)
 template<typename T>
 void Mylist<T>::swap(Mylist<T>& other)
 {
+    std::swap(_size, other._size);
     Node* tmp = head;
     head = other.head;
     other.head = tmp;
@@ -89,6 +96,7 @@ void Mylist<T>::pop_front()
     {
         throw out_of_range("Cannot pop front from an empty list");
     }
+    _size--;
 }
 
 template<typename T>
@@ -120,6 +128,7 @@ void Mylist<T>::push_front(const T& item)
         head = new_node;
         new_node->next = nullptr;
     }
+    ++_size;
 }
 
 
@@ -142,6 +151,7 @@ void Mylist<T>::push_back(const T& item)
         }
         current->next = new_node;
     }
+    ++_size;
 }
 
 
@@ -170,7 +180,7 @@ void Mylist<T>::pop_back()
     {
         throw out_of_range("Cannot pop back from an empty list");
     }
-
+    _size--;
 }
 
 template<typename T>
@@ -221,6 +231,7 @@ void Mylist<T>::insert(const T& item, int index)
         new_node->next = nextNode;
         tmp->next = new_node;
     }
+    ++_size;
 }
 
 template<typename T>
@@ -252,6 +263,7 @@ void Mylist<T>::destroy(int index)
         Node* node_to_delete = tmp->next;
         tmp->next = node_to_delete->next;
         delete node_to_delete;
+        _size--;
     }
 }
 
@@ -290,37 +302,46 @@ template<typename T>
 void Mylist<T>::delete_node(const T& item)
 {
     Node* current = head;
-
     Node* prev = nullptr;
-
     while(current != nullptr) {
-
         if(current->data == item) {
-
             Node* to_delete = current;
-
             current = current->next;
-
             if(prev == nullptr) {
-
                 head = current;
-
             } else {
-
                 prev->next = current;
-
             }
-
             delete to_delete;
-
+            _size--;
         } else {
-
             prev = current;
-
             current = current->next;
-
         }
-
     }
 }
+
+
+template<typename T>
+inline T & my::Mylist<T>::back()
+{
+    Node* tmp = head;
+    while(tmp->next != nullptr)
+    {
+        tmp = tmp->next;
+    }
+    return tmp->data;
+}
+
+template<typename T>
+void hanoi(int n, Mylist<T>& source, Mylist<T>& target, Mylist<T>& auxiliary) {
+    if (n > 0) {
+        hanoi(n - 1, source, auxiliary, target);
+        target.push_back(source.back());
+        source.pop_back();
+        //std::cout << "Move disk " << source.back() << " from " << "surce" << " to " << "target" << std::endl;
+        hanoi(n - 1, auxiliary, target, source);
+    }
+}
+
 }

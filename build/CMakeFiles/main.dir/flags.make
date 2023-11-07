@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/gripulia/super-ist/include
 
-CXX_FLAGS = 
+CXX_FLAGS = -g
 
